@@ -12,7 +12,7 @@ import {
   isBuiltinWidget,
 } from "@reearth/beta/lib/core/Crust/Widgets";
 import { WidgetAreaPadding } from "@reearth/beta/lib/core/Crust/Widgets/WidgetAlignSystem/types";
-import { LayerAppearanceTypes } from "@reearth/beta/lib/core/mantle";
+import { LayerAppearanceTypes, Feature } from "@reearth/beta/lib/core/mantle";
 import type { Layer } from "@reearth/beta/lib/core/Map";
 import { DEFAULT_LAYER_STYLE, valueTypeFromGQL } from "@reearth/beta/utils/value";
 import { NLSLayer } from "@reearth/services/api/layersApi/utils";
@@ -366,18 +366,56 @@ export function processLayers(
     return DEFAULT_LAYER_STYLE;
   };
 
+  const handleCoordinate = (geomery: any) => {
+    switch (geomery.type) {
+      case "Polygon":
+        return geomery.polygonCoordinates;
+      case "MultiPolygon":
+        return geomery.multiPolygonCoordinates;
+      case "LineString":
+        return geomery.lineStringCoordinates;
+      case "Point":
+        return geomery.pointCoordinates;
+      case "GeometryCollection":
+        return geomery.geometries;
+      default:
+        return geomery;
+    }
+  };
+
   return newLayers?.map(nlsLayer => {
     const layerStyle = getLayerStyleValue(nlsLayer.config?.layerStyleId);
+    const sketchLayerData = nlsLayer.isSketch && {
+      ...nlsLayer.config.data,
+      value: {
+        type: "FeatureCollection",
+        features: nlsLayer.sketch.featureCollection.features.map((feature: Feature) => {
+          const cleanedFeatures = {
+            ...feature,
+            geometry: {
+              ...feature.geometry,
+              coordinates: handleCoordinate(feature.geometry),
+            },
+          };
+
+          return cleanedFeatures;
+        }),
+      },
+    };
+
     return {
       type: "simple",
       id: nlsLayer.id,
       title: nlsLayer.title,
       visible: nlsLayer.visible,
+      sketch: nlsLayer.sketch,
+      isSketch: nlsLayer.isSketch,
+      // infobox: nlsLayer.infobox ? processInfobox(nlsLayer.infobox, parent?.infobox) : undefined,
       infobox: convertInfobox(nlsLayer.infobox, parent?.infobox, infoboxBlockNames),
       properties: nlsLayer.config?.properties,
       defines: nlsLayer.config?.defines,
       events: nlsLayer.config?.events,
-      data: nlsLayer.config?.data,
+      data: nlsLayer.isSketch ? sketchLayerData : nlsLayer.config?.data,
       ...layerStyle,
     };
   });

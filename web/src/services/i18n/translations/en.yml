@@ -109,9 +109,11 @@ Outline: Outline
 Add Layer from Resource: Add Layer from Resource
 Add Sketch Layer: ''
 Inspector: Inspector
+Unsupported custom field: Unsupported custom field
 ID: ID
 Geometry: Geometry
 Properties: Properties
+Custom Properties: ''
 Data: Data
 Feature: Feature
 Styling: Styling
