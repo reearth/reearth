@@ -10,11 +10,11 @@ jobs:
   update_ion_token:
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/auth@v0
+      - uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
+        uses: google-github-actions/setup-gcloud@v2
       - name: Download reearth config
         run: gsutil cp "${{ env.GCS_DOMAIN }}/${{ env.REEARTH_CONFIG_FILENAME }}" .
       - name: Get Cesium Ion token
