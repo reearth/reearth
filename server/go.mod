@@ -5,12 +5,14 @@ require (
 	cloud.google.com/go/storage v1.36.0
 	github.com/99designs/gqlgen v0.17.43
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v1.21.0
+	github.com/alicebob/miniredis/v2 v2.32.1
 	github.com/avast/retry-go/v4 v4.0.4
 	github.com/aws/aws-sdk-go-v2 v1.25.3
 	github.com/aws/aws-sdk-go-v2/config v1.27.7
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.52.0
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/gavv/httpexpect/v2 v2.3.1
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/goccy/go-yaml v1.11.3
 	github.com/google/uuid v1.6.0
 	github.com/iancoleman/strcase v0.3.0
@@ -36,6 +38,7 @@ require (
 	github.com/uber/jaeger-lib v2.4.1+incompatible
 	github.com/vektah/dataloaden v0.3.0
 	github.com/vektah/gqlparser/v2 v2.5.11
+	github.com/vmihailenco/msgpack/v5 v5.4.1
 	github.com/zitadel/oidc v1.13.5
 	go.mongodb.org/mongo-driver v1.13.1
 	go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.32.0
@@ -64,6 +67,7 @@ require (
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20210927113745-59d0afb8317a // indirect
+	github.com/alicebob/gopher-json v0.0.0-20200520072559-a9ecdc9d1d3a // indirect
 	github.com/andybalholm/brotli v1.0.2 // indirect
 	github.com/auth0/go-jwt-middleware/v2 v2.2.1 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.1 // indirect
@@ -82,8 +86,10 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.23.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.28.4 // indirect
 	github.com/aws/smithy-go v1.20.1 // indirect
+	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/fatih/structs v1.0.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
@@ -132,6 +138,7 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.27.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
+	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
@@ -143,6 +150,7 @@ require (
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
+	github.com/yuin/gopher-lua v1.1.1 // indirect
 	github.com/zitadel/logging v0.3.4 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.opentelemetry.io/contrib v1.22.0 // indirect
