@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/reearth/reearth/server/internal/usecase"
+	"github.com/reearth/reearth/server/internal/usecase/gateway"
 	"github.com/reearth/reearth/server/internal/usecase/interfaces"
 	"github.com/reearth/reearth/server/internal/usecase/repo"
 	"github.com/reearth/reearth/server/pkg/builtin"
@@ -25,9 +26,10 @@ type NLSLayer struct {
 	propertyRepo  repo.Property
 	pluginRepo    repo.Plugin
 	transaction   usecasex.Transaction
+	redis         gateway.RedisGateway
 }
 
-func NewNLSLayer(r *repo.Container) interfaces.NLSLayer {
+func NewNLSLayer(r *repo.Container, redis gateway.RedisGateway) interfaces.NLSLayer {
 	return &NLSLayer{
 		commonSceneLock: commonSceneLock{sceneLockRepo: r.SceneLock},
 		nlslayerRepo:    r.NLSLayer,
@@ -35,6 +37,7 @@ func NewNLSLayer(r *repo.Container) interfaces.NLSLayer {
 		propertyRepo:    r.Property,
 		pluginRepo:      r.Plugin,
 		transaction:     r.Transaction,
+		redis:           redis,
 	}
 }
 
@@ -103,6 +106,12 @@ func (i *NLSLayer) AddLayerSimple(ctx context.Context, inp interfaces.AddNLSLaye
 	}
 
 	tx.Commit()
+
+	err = setToCache[nlslayer.NLSLayer](ctx, i.redis, nlslayer.NLSLayerCacheKey(layerSimple.ID()), layerSimple)
+	if err != nil {
+		return nil, err
+	}
+
 	return layerSimple, nil
 }
 
@@ -139,15 +148,26 @@ func (i *NLSLayer) Remove(ctx context.Context, lid id.NLSLayerID, operator *usec
 		}
 	}()
 
-	l, err := i.nlslayerRepo.FindByID(ctx, lid)
+	var layer nlslayer.NLSLayer
+	layerSimple, err := getFromCache[*nlslayer.NLSLayerSimple](ctx, i.redis, nlslayer.NLSLayerCacheKey(lid))
 	if err != nil {
 		return lid, nil, err
 	}
-	if err := i.CanWriteScene(l.Scene(), operator); err != nil {
+
+	if layerSimple == nil {
+		layer, err = i.nlslayerRepo.FindByID(ctx, lid)
+		if err != nil {
+			return lid, nil, err
+		}
+	} else {
+		layer = layerSimple
+	}
+
+	if err := i.CanWriteScene(layer.Scene(), operator); err != nil {
 		return lid, nil, err
 	}
 
-	if err := i.CheckSceneLock(ctx, l.Scene()); err != nil {
+	if err := i.CheckSceneLock(ctx, layer.Scene()); err != nil {
 		return lid, nil, err
 	}
 
@@ -156,7 +176,7 @@ func (i *NLSLayer) Remove(ctx context.Context, lid id.NLSLayerID, operator *usec
 		return lid, nil, err
 	}
 	if parentLayer != nil {
-		if l.Scene() != parentLayer.Scene() {
+		if layer.Scene() != parentLayer.Scene() {
 			return lid, nil, errors.New("invalid layer")
 		}
 	}
@@ -171,17 +191,25 @@ func (i *NLSLayer) Remove(ctx context.Context, lid id.NLSLayerID, operator *usec
 			return lid, nil, err
 		}
 	}
-	layers, err := i.fetchAllChildren(ctx, l)
+	layers, err := i.fetchAllChildren(ctx, layer)
 	if err != nil {
 		return lid, nil, err
 	}
-	layers = append(layers, l.ID())
+	layers = append(layers, layer.ID())
 	err = i.nlslayerRepo.RemoveAll(ctx, layers)
 	if err != nil {
 		return lid, nil, err
 	}
 
 	tx.Commit()
+
+	for _, l := range layers {
+		err = deleteFromCache(ctx, i.redis, nlslayer.NLSLayerCacheKey(l))
+		if err != nil {
+			return l, nil, err
+		}
+	}
+
 	return lid, parentLayer, nil
 }
 
@@ -198,10 +226,21 @@ func (i *NLSLayer) Update(ctx context.Context, inp interfaces.UpdateNLSLayerInpu
 		}
 	}()
 
-	layer, err := i.nlslayerRepo.FindByID(ctx, inp.LayerID)
+	var layer nlslayer.NLSLayer
+	layerSimple, err := getFromCache[*nlslayer.NLSLayerSimple](ctx, i.redis, nlslayer.NLSLayerCacheKey(inp.LayerID))
 	if err != nil {
 		return nil, err
 	}
+
+	if layerSimple == nil {
+		layer, err = i.nlslayerRepo.FindByID(ctx, inp.LayerID)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		layer = layerSimple
+	}
+
 	if err := i.CanWriteScene(layer.Scene(), operator); err != nil {
 		return nil, err
 	}
@@ -224,6 +263,12 @@ func (i *NLSLayer) Update(ctx context.Context, inp interfaces.UpdateNLSLayerInpu
 	}
 
 	tx.Commit()
+
+	err = setToCache[nlslayer.NLSLayer](ctx, i.redis, nlslayer.NLSLayerCacheKey(layer.ID()), layer)
+	if err != nil {
+		return nil, err
+	}
+
 	return layer, nil
 }
 
@@ -522,10 +567,21 @@ func (i *NLSLayer) Duplicate(ctx context.Context, lid id.NLSLayerID, operator *u
 		}
 	}()
 
-	layer, err := i.nlslayerRepo.FindByID(ctx, lid)
+	var layer nlslayer.NLSLayer
+	layerSimple, err := getFromCache[*nlslayer.NLSLayerSimple](ctx, i.redis, nlslayer.NLSLayerCacheKey(lid))
 	if err != nil {
 		return nil, err
 	}
+
+	if layerSimple == nil {
+		layer, err = i.nlslayerRepo.FindByID(ctx, lid)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		layer = layerSimple
+	}
+
 	if err := i.CanWriteScene(layer.Scene(), operator); err != nil {
 		return nil, err
 	}
@@ -538,6 +594,12 @@ func (i *NLSLayer) Duplicate(ctx context.Context, lid id.NLSLayerID, operator *u
 	}
 
 	tx.Commit()
+
+	err = setToCache[nlslayer.NLSLayer](ctx, i.redis, nlslayer.NLSLayerCacheKey(duplicatedLayer.ID()), duplicatedLayer)
+	if err != nil {
+		return nil, err
+	}
+
 	return duplicatedLayer, nil
 }
 

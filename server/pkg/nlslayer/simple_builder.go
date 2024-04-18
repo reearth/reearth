@@ -24,11 +24,11 @@ type NLSLayerSimpleBuilder struct {
 }
 
 func NewNLSLayerSimple() *NLSLayerSimpleBuilder {
-	return &NLSLayerSimpleBuilder{l: &NLSLayerSimple{layerBase: layerBase{}}}
+	return &NLSLayerSimpleBuilder{l: &NLSLayerSimple{LayerBase: LayerBase{}}}
 }
 
 func (b *NLSLayerSimpleBuilder) Build() (*NLSLayerSimple, error) {
-	if b.l.id.IsNil() {
+	if b.l.IDField.IsNil() {
 		return nil, ErrInvalidID
 	}
 	return b.l, nil
@@ -42,57 +42,57 @@ func (b *NLSLayerSimpleBuilder) MustBuild() *NLSLayerSimple {
 	return Simple
 }
 
-func (b *NLSLayerSimpleBuilder) base(layer layerBase) *NLSLayerSimpleBuilder {
-	b.l.layerBase = layer
+func (b *NLSLayerSimpleBuilder) base(layer LayerBase) *NLSLayerSimpleBuilder {
+	b.l.LayerBase = layer
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) ID(id ID) *NLSLayerSimpleBuilder {
-	b.l.id = id
+	b.l.IDField = id
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) NewID() *NLSLayerSimpleBuilder {
-	b.l.id = NewID()
+	b.l.IDField = NewID()
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) LayerType(t LayerType) *NLSLayerSimpleBuilder {
-	b.l.layerType = t
+	b.l.LayerTypeField = t
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) Scene(s SceneID) *NLSLayerSimpleBuilder {
-	b.l.scene = s
+	b.l.SceneField = s
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) Title(t string) *NLSLayerSimpleBuilder {
-	b.l.title = t
+	b.l.TitleField = t
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) IsVisible(i bool) *NLSLayerSimpleBuilder {
-	b.l.visible = i
+	b.l.VisibleField = i
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) Infobox(infobox *Infobox) *NLSLayerSimpleBuilder {
-	b.l.infobox = infobox
+	b.l.InfoboxField = infobox
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) Config(c *Config) *NLSLayerSimpleBuilder {
-	b.l.config = c
+	b.l.ConfigField = c
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) IsSketch(i bool) *NLSLayerSimpleBuilder {
-	b.l.isSketch = i
+	b.l.IsSketchField = i
 	return b
 }
 
 func (b *NLSLayerSimpleBuilder) Sketch(sketch *SketchInfo) *NLSLayerSimpleBuilder {
-	b.l.sketch = sketch
+	b.l.SketchField = sketch
 	return b
 }

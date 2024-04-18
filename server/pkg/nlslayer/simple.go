@@ -5,26 +5,26 @@ import (
 )
 
 type NLSLayerSimple struct {
-	layerBase
+	LayerBase
 }
 
 func (l *NLSLayerSimple) ID() ID {
-	return l.layerBase.ID()
+	return l.LayerBase.ID()
 }
 
 func (l *NLSLayerSimple) IDRef() *ID {
 	if l == nil {
 		return nil
 	}
-	return l.layerBase.IDRef()
+	return l.LayerBase.IDRef()
 }
 
 func (l *NLSLayerSimple) LayerType() LayerType {
-	return l.layerBase.LayerType()
+	return l.LayerBase.LayerType()
 }
 
 func (l *NLSLayerSimple) Scene() SceneID {
-	return l.layerBase.scene
+	return l.LayerBase.SceneField
 }
 
 func (l *NLSLayerSimple) LinkedDataset() *pl.DatasetID {
@@ -32,42 +32,42 @@ func (l *NLSLayerSimple) LinkedDataset() *pl.DatasetID {
 }
 
 func (l *NLSLayerSimple) Title() string {
-	return l.layerBase.Title()
+	return l.LayerBase.Title()
 }
 
 func (l *NLSLayerSimple) IsVisible() bool {
 	if l == nil {
 		return false
 	}
-	return l.layerBase.visible
+	return l.LayerBase.VisibleField
 }
 
 func (l *NLSLayerSimple) HasInfobox() bool {
 	if l == nil {
 		return false
 	}
-	return l.layerBase.infobox != nil
+	return l.LayerBase.InfoboxField != nil
 }
 
 func (l *NLSLayerSimple) Infobox() *Infobox {
 	if l == nil {
 		return nil
 	}
-	return l.layerBase.infobox
+	return l.LayerBase.InfoboxField
 }
 
 func (l *NLSLayerSimple) SetVisible(visible bool) {
 	if l == nil {
 		return
 	}
-	l.layerBase.visible = visible
+	l.LayerBase.VisibleField = visible
 }
 
 func (l *NLSLayerSimple) SetInfobox(infobox *Infobox) {
 	if l == nil {
 		return
 	}
-	l.layerBase.infobox = infobox
+	l.LayerBase.InfoboxField = infobox
 }
 
 func (l *NLSLayerSimple) LayerRef() *NLSLayer {
@@ -82,7 +82,7 @@ func (l *NLSLayerSimple) Config() *Config {
 	if l == nil {
 		return nil
 	}
-	return l.config
+	return l.ConfigField
 }
 
 func (l *NLSLayerSimple) Clone() Cloner {
@@ -90,10 +90,14 @@ func (l *NLSLayerSimple) Clone() Cloner {
 		return nil
 	}
 
-	clonedBase := l.layerBase.Clone()
+	clonedBase := l.LayerBase.Clone()
+	clonedBaseTyped, ok := clonedBase.(*LayerBase)
+	if !ok {
+		return nil
+	}
 
 	return &NLSLayerSimple{
-		layerBase: *clonedBase,
+		LayerBase: *clonedBaseTyped,
 	}
 }
 
@@ -101,33 +105,33 @@ func (l *NLSLayerSimple) IsSketch() bool {
 	if l == nil {
 		return false
 	}
-	return l.layerBase.isSketch
+	return l.LayerBase.IsSketchField
 }
 
 func (l *NLSLayerSimple) SetIsSketch(isSketch bool) {
 	if l == nil {
 		return
 	}
-	l.layerBase.isSketch = isSketch
+	l.LayerBase.IsSketchField = isSketch
 }
 
 func (l *NLSLayerSimple) HasSketch() bool {
 	if l == nil {
 		return false
 	}
-	return l.layerBase.sketch != nil
+	return l.LayerBase.SketchField != nil
 }
 
 func (l *NLSLayerSimple) Sketch() *SketchInfo {
 	if l == nil {
 		return nil
 	}
-	return l.layerBase.sketch
+	return l.LayerBase.SketchField
 }
 
 func (l *NLSLayerSimple) SetSketch(sketch *SketchInfo) {
 	if l == nil {
 		return
 	}
-	l.layerBase.sketch = sketch
+	l.LayerBase.SketchField = sketch
 }

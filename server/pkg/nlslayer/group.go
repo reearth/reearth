@@ -1,67 +1,67 @@
 package nlslayer
 
 type NLSLayerGroup struct {
-	layerBase
+	LayerBase
 	children *IDList
 	root     bool
 }
 
 func (l *NLSLayerGroup) ID() ID {
-	return l.layerBase.ID()
+	return l.LayerBase.ID()
 }
 
 func (l *NLSLayerGroup) IDRef() *ID {
 	if l == nil {
 		return nil
 	}
-	return l.layerBase.IDRef()
+	return l.LayerBase.IDRef()
 }
 
 func (l *NLSLayerGroup) LayerType() LayerType {
-	return l.layerBase.LayerType()
+	return l.LayerBase.LayerType()
 }
 
 func (l *NLSLayerGroup) Scene() SceneID {
-	return l.layerBase.scene
+	return l.LayerBase.SceneField
 }
 
 func (l *NLSLayerGroup) Title() string {
-	return l.layerBase.Title()
+	return l.LayerBase.Title()
 }
 
 func (l *NLSLayerGroup) IsVisible() bool {
 	if l == nil {
 		return false
 	}
-	return l.layerBase.visible
+	return l.LayerBase.VisibleField
 }
 
 func (l *NLSLayerGroup) HasInfobox() bool {
 	if l == nil {
 		return false
 	}
-	return l.layerBase.infobox != nil
+	return l.LayerBase.InfoboxField != nil
 }
 
 func (l *NLSLayerGroup) Infobox() *Infobox {
 	if l == nil {
 		return nil
 	}
-	return l.layerBase.infobox
+	return l.LayerBase.InfoboxField
 }
 
 func (l *NLSLayerGroup) SetVisible(visible bool) {
 	if l == nil {
 		return
 	}
-	l.layerBase.visible = visible
+	l.LayerBase.VisibleField = visible
 }
 
 func (l *NLSLayerGroup) SetInfobox(infobox *Infobox) {
 	if l == nil {
 		return
 	}
-	l.layerBase.infobox = infobox
+	l.LayerBase.InfoboxField = infobox
 }
 
 func (l *NLSLayerGroup) Children() *IDList {
@@ -86,7 +86,7 @@ func (l *NLSLayerGroup) Config() *Config {
 	if l == nil {
 		return &Config{}
 	}
-	return l.config
+	return l.ConfigField
 }
 
 func (l *NLSLayerGroup) IsRoot() bool {
@@ -101,7 +101,11 @@ func (l *NLSLayerGroup) Clone() Cloner {
 		return nil
 	}
 
-	clonedBase := l.layerBase.Clone()
+	clonedBase := l.LayerBase.Clone()
+	clonedBaseTyped, ok := clonedBase.(*LayerBase)
+	if !ok {
+		return nil
+	}
 
 	var clonedChildren *IDList
 	if l.children != nil {
@@ -109,7 +113,7 @@ func (l *NLSLayerGroup) Clone() Cloner {
 	}
 
 	return &NLSLayerGroup{
-		layerBase: *clonedBase,
+		LayerBase: *clonedBaseTyped,
 		children:  clonedChildren,
 		root:      l.root,
 	}
@@ -119,33 +123,33 @@ func (l *NLSLayerGroup) IsSketch() bool {
 	if l == nil {
 		return false
 	}
-	return l.layerBase.isSketch
+	return l.LayerBase.IsSketchField
 }
 
 func (l *NLSLayerGroup) SetIsSketch(isSketch bool) {
 	if l == nil {
 		return
 	}
-	l.layerBase.isSketch = isSketch
+	l.LayerBase.IsSketchField = isSketch
 }
 
 func (l *NLSLayerGroup) HasSketch() bool {
 	if l == nil {
 		return false
 	}
-	return l.layerBase.sketch != nil
+	return l.LayerBase.SketchField != nil
 }
 
 func (l *NLSLayerGroup) Sketch() *SketchInfo {
 	if l == nil {
 		return nil
 	}
-	return l.layerBase.sketch
+	return l.LayerBase.SketchField
 }
 
 func (l *NLSLayerGroup) SetSketch(sketch *SketchInfo) {
 	if l == nil {
 		return
 	}
-	l.layerBase.sketch = sketch
+	l.LayerBase.SketchField = sketch
 }

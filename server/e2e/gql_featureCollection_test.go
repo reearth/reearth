@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/alicebob/miniredis/v2"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/reearth/reearth/server/internal/app/config"
 )
@@ -196,12 +197,23 @@ func deleteGeoJSONFeature(
 	return requestBody, res, fId
 }
 
-func TestFeatureCollectionCRUD(t *testing.T) {
+func featureCollectionCRUD(t *testing.T, isUseRedis bool) {
+	redisAddress := ""
+	if isUseRedis {
+		mr, err := miniredis.Run()
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer mr.Close()
+		redisAddress = mr.Addr()
+	}
+
 	e := StartServer(t, &config.Config{
 		Origins: []string{"https://example.com"},
 		AuthSrv: config.AuthSrvConfig{
 			Disabled: true,
 		},
+		RedisHost: redisAddress,
 	}, true, baseSeeder)
 
 	pId := createProject(e)
@@ -505,4 +517,12 @@ func TestFeatureCollectionCRUD(t *testing.T) {
 		Value("featureCollection").Object().
 		Value("features").Array().
 		Length().Equal(0)
+}
+
+func TestFeatureCollectionCRUD(t *testing.T) {
+	featureCollectionCRUD(t, false)
+}
+
+func TestFeatureCollectionCRUDWithRedis(t *testing.T) {
+	featureCollectionCRUD(t, true)
 }
