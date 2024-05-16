@@ -36,6 +36,16 @@ var types = value.TypePropertyMap{
 	value.Type(ValueTypeTimeline):   &typePropertyTimeline{},
 }
 
+func NewValue(v *value.Value) *Value {
+	if v == nil {
+		return nil
+	}
+
+	return &Value{
+		v: *v,
+	}
+}
+
 func (vt ValueType) Valid() bool {
 	if _, ok := types[value.Type(vt)]; ok {
 		return true
@@ -244,4 +254,8 @@ func ValueFromStringOrNumber(s string) *Value {
 	}
 
 	return ValueTypeString.ValueFrom(s)
+}
+
+func DefaultTypes() value.TypePropertyMap {
+	return types
 }
