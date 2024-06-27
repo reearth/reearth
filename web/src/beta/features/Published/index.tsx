@@ -11,10 +11,11 @@ export type Props = {
 export default function Published({ alias }: Props) {
   const t = useT();
   const {
-    sceneProperty,
+    viewerProperty,
     pluginProperty,
     layers,
     widgets,
+    widgetThemeOptions,
     story,
     ready,
     error,
@@ -38,8 +39,9 @@ export default function Published({ alias }: Props) {
       ready={ready}
       layers={layers}
       widgets={widgets}
+      widgetThemeOptions={widgetThemeOptions}
       story={story}
-      sceneProperty={sceneProperty}
+      viewerProperty={viewerProperty}
       pluginProperty={pluginProperty}
       showStoryPanel={!!story}
       currentCamera={currentCamera}

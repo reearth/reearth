@@ -99,7 +99,6 @@ export const context: Context = {
     scene: {
       inEditor: false,
       built: false,
-      overrideProperty: act("overrideSceneProperty"),
       captureScreen: act("captureScreen"),
       getLocationFromScreen: act("getLocationFromScreen"),
       sampleTerrainHeight: act("sampleTerrainHeight"),
@@ -111,6 +110,9 @@ export const context: Context = {
       isPositionVisible: act("isPositionVisible"),
       toWindowPosition: act("toWindowPosition"),
       pickManyFromViewport: act("pickManyFromViewport"),
+    },
+    viewer: {
+      overrideProperty: act("overrideViewerProperty"),
     },
     layers: {
       hide: act("layers.hide"),
@@ -216,7 +218,7 @@ export const context: Context = {
       });
     },
   },
-  overrideSceneProperty: act("overrideSceneProperty"),
+  overrideViewerProperty: act("overrideViewerProperty"),
 };
 
 function act<T extends any[], M extends (...args: T) => any>(

@@ -48,7 +48,7 @@ export type SelectedReearthEventType = Pick<
 export default function ({
   engineName,
   mapRef,
-  sceneProperty,
+  viewerProperty,
   inEditor,
   built,
   // tags,
@@ -62,7 +62,7 @@ export default function ({
   timelineManagerRef,
   selectedStory,
   overrideInteractionMode,
-  overrideSceneProperty,
+  overrideViewerProperty,
   onLayerEdit,
   onLayerSelectWithRectStart,
   onLayerSelectWithRectMove,
@@ -88,7 +88,7 @@ export default function ({
   const clientStorage = useClientStorage();
 
   const getLayers = useGet(layersRef);
-  const getSceneProperty = useGet(sceneProperty);
+  const getViewerProperty = useGet(viewerProperty);
   const getInEditor = useGet(!!inEditor);
   const getBuilt = useGet(!!built);
   const getTags = useGet([]);
@@ -186,11 +186,11 @@ export default function ({
   const getSelectedLayer = useGet(selectedLayer);
   const getSelectedFeature = useGet(selectedFeature);
   const getLayerSelectionReason = useGet(layerSelectionReason);
-  const overrideScenePropertyCommon = useCallback(
+  const overrideViewerPropertyCommon = useCallback(
     (property: any) => {
-      return overrideSceneProperty?.("", property);
+      return overrideViewerProperty?.("", property);
     },
-    [overrideSceneProperty],
+    [overrideViewerProperty],
   );
 
   const flyTo: FlyTo = useCallback(
@@ -540,7 +540,7 @@ export default function ({
         engineName,
         events: ev,
         layers: getLayers,
-        sceneProperty: getSceneProperty,
+        viewerProperty: getViewerProperty,
         inEditor: getInEditor,
         built: getBuilt,
         tags: getTags,
@@ -560,7 +560,7 @@ export default function ({
         selectFeature,
         selectFeatures,
         overrideLayerProperty,
-        overrideSceneProperty: overrideScenePropertyCommon,
+        overrideViewerProperty: overrideViewerPropertyCommon,
         layersInViewport,
         flyTo,
         flyToBBox,
@@ -602,7 +602,7 @@ export default function ({
         sendToBack,
         forceHorizontalRoll: onCameraForceHorizontalRollChange,
       }),
-      overrideSceneProperty,
+      overrideViewerProperty,
       pluginInstances,
       clientStorage,
       timelineManagerRef,
@@ -611,7 +611,7 @@ export default function ({
       engineName,
       ev,
       getLayers,
-      getSceneProperty,
+      getViewerProperty,
       getInEditor,
       getBuilt,
       getTags,
@@ -631,7 +631,7 @@ export default function ({
       selectFeature,
       selectFeatures,
       overrideLayerProperty,
-      overrideScenePropertyCommon,
+      overrideViewerPropertyCommon,
       layersInViewport,
       flyTo,
       flyToBBox,
@@ -671,7 +671,7 @@ export default function ({
       pickManyFromViewport,
       bringToFront,
       sendToBack,
-      overrideSceneProperty,
+      overrideViewerProperty,
       onCameraForceHorizontalRollChange,
       pluginInstances,
       clientStorage,

@@ -21,6 +21,7 @@ import type {
   Tag,
   NaiveLayer,
   LayerSimple,
+  ViewerProperty,
 } from "@reearth/core";
 import {
   SketchAppearance,
@@ -113,6 +114,7 @@ export type Reearth = {
   readonly widget?: Widget;
   readonly block?: CommonBlock;
   readonly scene: Undefinable<Scene>;
+  readonly viewer: Viewer;
   readonly viewport?: Viewport;
   readonly clientStorage: ClientStorage;
   readonly sketch: Sketch;
@@ -142,8 +144,6 @@ export type CommonBlock = {
 export type Scene = {
   readonly inEditor: boolean;
   readonly built: boolean;
-  readonly property?: any;
-  readonly overrideProperty: (property: any) => void;
   readonly captureScreen: (type?: string, encoderOptions?: number) => string | undefined;
   readonly getLocationFromScreen: (
     x: number,
@@ -180,6 +180,11 @@ export type Scene = {
     // TODO: Get condition as expression for plugin
     condition?: (f: ComputedFeature) => boolean,
   ) => ComputedFeature[] | undefined;
+};
+
+export type Viewer = {
+  readonly property?: ViewerProperty;
+  readonly overrideProperty?: (property: ViewerProperty) => void;
 };
 
 export type Camera = {

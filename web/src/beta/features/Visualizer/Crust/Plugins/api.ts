@@ -7,6 +7,7 @@ import type {
   NaiveLayer,
   LazyLayer,
   TimelineManagerRef,
+  ViewerProperty,
 } from "@reearth/core";
 
 import type { InfoboxBlock as Block } from "../Infobox/types";
@@ -50,7 +51,7 @@ export function exposed({
   block,
   widget,
   startEventLoop,
-  overrideSceneProperty,
+  overrideViewerProperty,
   moveWidget,
   pluginPostMessage,
   clientStorage,
@@ -90,7 +91,7 @@ export function exposed({
   block?: () => Block | undefined;
   widget?: () => Widget | undefined;
   startEventLoop?: () => void;
-  overrideSceneProperty?: (pluginId: string, property: any) => void;
+  overrideViewerProperty?: (pluginId: string, property: ViewerProperty) => void;
   moveWidget?: (widgetId: string, options: WidgetLocationOptions) => void;
   pluginPostMessage: (extentionId: string, msg: any, sender: string) => void;
   clientStorage: ClientStorage;
@@ -107,7 +108,10 @@ export function exposed({
         visualizer: merge(commonReearth.visualizer, {
           get overrideProperty() {
             return (property: any) => {
-              overrideSceneProperty?.(plugin ? `${plugin.id}/${plugin.extensionId}` : "", property);
+              overrideViewerProperty?.(
+                plugin ? `${plugin.id}/${plugin.extensionId}` : "",
+                property,
+              );
             };
           },
         }),
@@ -165,7 +169,10 @@ export function exposed({
         scene: merge(commonReearth.scene, {
           get overrideProperty() {
             return (property: any) => {
-              overrideSceneProperty?.(plugin ? `${plugin.id}/${plugin.extensionId}` : "", property);
+              overrideViewerProperty?.(
+                plugin ? `${plugin.id}/${plugin.extensionId}` : "",
+                property,
+              );
             };
           },
           get sampleTerrainHeight() {
@@ -404,7 +411,7 @@ export function commonReearth({
   events,
   layersInViewport,
   layers,
-  sceneProperty,
+  viewerProperty,
   inEditor,
   built,
   tags,
@@ -424,7 +431,7 @@ export function commonReearth({
   hideLayer,
   addLayer,
   overrideLayerProperty,
-  overrideSceneProperty,
+  overrideViewerProperty,
   flyTo,
   lookAt,
   zoomIn,
@@ -468,7 +475,7 @@ export function commonReearth({
   engineName?: string;
   events: Events<ReearthEventType>;
   layers: () => MapRef["layers"] | undefined;
-  sceneProperty: () => any;
+  viewerProperty: () => GlobalThis["reearth"]["viewer"]["property"];
   tags: () => Tag[];
   viewport: () => GlobalThis["reearth"]["viewport"];
   camera: () => GlobalThis["reearth"]["camera"]["position"];
@@ -487,7 +494,7 @@ export function commonReearth({
   hideLayer: GlobalThis["reearth"]["layers"]["hide"];
   addLayer: GlobalThis["reearth"]["layers"]["add"];
   overrideLayerProperty: GlobalThis["reearth"]["layers"]["overrideProperty"];
-  overrideSceneProperty: GlobalThis["reearth"]["scene"]["overrideProperty"];
+  overrideViewerProperty: GlobalThis["reearth"]["viewer"]["overrideProperty"];
   flyTo: GlobalThis["reearth"]["camera"]["flyTo"];
   lookAt: GlobalThis["reearth"]["camera"]["lookAt"];
   zoomIn: GlobalThis["reearth"]["camera"]["zoomIn"];
@@ -532,7 +539,7 @@ export function commonReearth({
 }): CommonReearth {
   return {
     version: window.REEARTH_CONFIG?.version || "",
-    apiVersion: 1,
+    apiVersion: 1.1,
     visualizer: {
       engine: engineName,
       camera: {
@@ -567,9 +574,9 @@ export function commonReearth({
         forceHorizontalRoll,
       },
       get property() {
-        return sceneProperty?.();
+        return viewerProperty?.();
       },
-      overrideProperty: overrideSceneProperty,
+      overrideProperty: overrideViewerProperty,
     },
     get clock() {
       return clock?.();
@@ -584,10 +591,6 @@ export function commonReearth({
       get built() {
         return !!built?.();
       },
-      get property() {
-        return sceneProperty?.();
-      },
-      overrideProperty: overrideSceneProperty,
       captureScreen,
       getLocationFromScreen,
       sampleTerrainHeight,
@@ -599,6 +602,12 @@ export function commonReearth({
       isPositionVisible,
       toWindowPosition,
       pickManyFromViewport,
+    },
+    viewer: {
+      get property() {
+        return viewerProperty?.();
+      },
+      overrideProperty: overrideViewerProperty,
     },
     get viewport() {
       return viewport?.();

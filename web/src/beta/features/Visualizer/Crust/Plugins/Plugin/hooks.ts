@@ -424,7 +424,7 @@ export function useAPI({
           onResize?.(width, height, extended);
         },
         startEventLoop,
-        overrideSceneProperty: ctx.overrideSceneProperty,
+        overrideViewerProperty: ctx.overrideViewerProperty,
         moveWidget: onWidgetMove,
         pluginPostMessage: ctx.pluginInstances.postMessage,
         clientStorage: ctx.clientStorage,
@@ -436,7 +436,7 @@ export function useAPI({
     ctx?.pluginInstances,
     ctx?.clientStorage,
     ctx?.timelineManagerRef,
-    ctx?.overrideSceneProperty,
+    ctx?.overrideViewerProperty,
     extensionId,
     extensionType,
     pluginId,
@@ -457,7 +457,7 @@ export function useAPI({
 
   useEffect(() => {
     event.current?.[1]("update");
-  }, [block, layer, widget, ctx?.reearth.scene.property]);
+  }, [block, layer, widget, ctx?.reearth.viewer.property]);
 
   const onModalClose = useCallback(() => {
     event.current?.[1]("modalclose");

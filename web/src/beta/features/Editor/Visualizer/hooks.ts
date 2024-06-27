@@ -1,8 +1,12 @@
 import { useMemo, useEffect, useCallback, useState, MutableRefObject } from "react";
 
 import type { Alignment, Location } from "@reearth/beta/features/Visualizer/Crust";
+import {
+  convertData,
+  sceneProperty2ViewerPropertyMapping,
+} from "@reearth/beta/utils/convert-object";
 import { Camera } from "@reearth/beta/utils/value";
-import type { LatLng, ComputedLayer, ComputedFeature } from "@reearth/core";
+import type { LatLng, ComputedLayer, ComputedFeature, ViewerProperty } from "@reearth/core";
 import {
   useLayersFetcher,
   useSceneFetcher,
@@ -62,9 +66,16 @@ export default ({
 
   const [zoomedLayerId, zoomToLayer] = useState<string | undefined>(undefined);
 
-  // Scene property
-  // TODO: Fix to use exact type through GQL typing
-  const sceneProperty = useMemo(() => processProperty(scene?.property), [scene?.property]);
+  const { viewerProperty, cesiumIonAccessToken } = useMemo(() => {
+    const sceneProperty = processProperty(scene?.property);
+    const cesiumIonAccessToken = sceneProperty?.default?.ion;
+    return {
+      viewerProperty: sceneProperty
+        ? (convertData(sceneProperty, sceneProperty2ViewerPropertyMapping) as ViewerProperty)
+        : undefined,
+      cesiumIonAccessToken,
+    };
+  }, [scene?.property]);
 
   const { installableInfoboxBlocks } = useInstallableInfoboxBlocksQuery({ sceneId });
 
@@ -251,9 +262,12 @@ export default ({
 
   const engineMeta = useMemo(
     () => ({
-      cesiumIonAccessToken: config()?.cesiumIonAccessToken,
+      cesiumIonAccessToken:
+        typeof cesiumIonAccessToken === "string" && cesiumIonAccessToken
+          ? cesiumIonAccessToken
+          : config()?.cesiumIonAccessToken,
     }),
-    [],
+    [cesiumIonAccessToken],
   );
 
   // TODO: Use GQL value
@@ -275,7 +289,7 @@ export default ({
   );
 
   return {
-    sceneProperty,
+    viewerProperty,
     pluginProperty,
     layers,
     widgets,
