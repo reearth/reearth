@@ -3306,10 +3306,10 @@
   resolved "https://registry.yarnpkg.com/@carbon/colors/-/colors-11.20.1.tgz#15bf97aa075674f9a198c0ce89f7dadde1d0499c"
   integrity sha512-CiW+05/LaYCZ8LW5ioEz4EL0DBxI0psZGdiA7leQSH/Wvec7mvEANhze3lYhfx3ZH700Q4Y2O9/roW+yLB1CQw==
 
-"@cesium/engine@^9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@cesium/engine/-/engine-9.0.0.tgz#74573f52100ef84ba5fcde9cd1084c07f7fe2fa7"
-  integrity sha512-GIeBitHo1t6OwgWnxAsCoHuCcJEfdki2G0hbKfaP87r2EapbnDLBmfxZziscl1ksv7kQiQ6x2FOOSPuV9QFvhA==
+"@cesium/engine@^10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@cesium/engine/-/engine-10.0.0.tgz#c5d67597e9ff18f63c8b63cfb72e8732f78fb844"
+  integrity sha512-0bynRIV5nGjZGuRm0ajvZ4cyIwSW/Z29CMaWcruJUhjprEW9u9YvJ5xsJkTe1qD45sR2E1XEejVkPv056x5GNg==
   dependencies:
     "@tweenjs/tween.js" "^23.1.1"
     "@zip.js/zip.js" "^2.7.34"
@@ -3324,19 +3324,19 @@
     ktx-parse "^0.7.0"
     lerc "^2.0.0"
     mersenne-twister "^1.1.0"
-    meshoptimizer "^0.20.0"
+    meshoptimizer "^0.21.0"
     pako "^2.0.4"
     protobufjs "^7.1.0"
     rbush "^3.0.1"
     topojson-client "^3.1.0"
     urijs "^1.19.7"
 
-"@cesium/widgets@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@cesium/widgets/-/widgets-6.0.0.tgz#be68f2b696bd6239cd37d63abd429e0608a9a0cb"
-  integrity sha512-zq0UqHji4PgPWTVdUB2hNb/FXe60eNDB11oW35/Z3REQfE4LBOkeR/RGck7hBOfYaubMiqwuwOw2lbl54OXzIA==
+"@cesium/widgets@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@cesium/widgets/-/widgets-7.0.0.tgz#2d75a95b4f43a65439458010292a5f91a16e920a"
+  integrity sha512-h8ntI7irvzZbtXcYmwDXxJe8WDbrGreoV7Z+IyA18M+ko7wI5oFtWwVsqH6QwNPNqE7gk7YxqVbGUi0UsRPC8g==
   dependencies:
-    "@cesium/engine" "^9.0.0"
+    "@cesium/engine" "^10.0.0"
     nosleep.js "^0.12.0"
 
 "@colors/colors@1.5.0":
@@ -10420,13 +10420,13 @@ cesium-mvt-imagery-provider@1.4.0:
     "@mapbox/vector-tile" "1.3.1"
     pbf "3.2.1"
 
-cesium@1.116.0:
-  version "1.116.0"
-  resolved "https://registry.yarnpkg.com/cesium/-/cesium-1.116.0.tgz#34c025babb49dfc4eeb98f9c83c37094a2083388"
-  integrity sha512-RZOOMePztCVb74JU/DTCTfuha7xTsJtEm3FRZeMUXyZABeRhbYjT1GwtAtoaPPJ5/IoqNjLvZnTNJdnU3LVE5g==
+cesium@1.119.0:
+  version "1.119.0"
+  resolved "https://registry.yarnpkg.com/cesium/-/cesium-1.119.0.tgz#e134db78ae5f9c1788d54e02dc7271d0b6b58c15"
+  integrity sha512-ifapkGusMJ2YhpyjAXGNiiZXFZ+QLzWro1OyBsqJjSGOK95Aab9dOBw0aPDXdzlaN7hxUFViN5+b2nN75fC9QA==
   dependencies:
-    "@cesium/engine" "^9.0.0"
-    "@cesium/widgets" "^6.0.0"
+    "@cesium/engine" "^10.0.0"
+    "@cesium/widgets" "^7.0.0"
 
 chai@^4.3.10:
   version "4.3.10"
@@ -15239,10 +15239,10 @@ mersenne-twister@^1.1.0:
   resolved "https://registry.yarnpkg.com/mersenne-twister/-/mersenne-twister-1.1.0.tgz#f916618ee43d7179efcf641bec4531eb9670978a"
   integrity sha512-mUYWsMKNrm4lfygPkL3OfGzOPTR2DBlTkBNHM//F6hGp8cLThY897crAlk3/Jo17LEOOjQUrNAx6DvgO77QJkA==
 
-meshoptimizer@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/meshoptimizer/-/meshoptimizer-0.20.0.tgz#890eaeafa2b5730a0c58770fdf3b1fe77b746bf5"
-  integrity sha512-olcJ1q+YVnjroRJpCL1Dj5aZxr2JMr2hRutMUwhuHZvpAL7SIZgOT6eMlFF4TbBGSR89tawE/gqB79J/LrW/Nw==
+meshoptimizer@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/meshoptimizer/-/meshoptimizer-0.21.0.tgz#08ba1e146f3a72be99d0a59ad509c1939eebc357"
+  integrity sha512-WabtlpnK/GgD0GMwYd1fBTfYHf4MIcQPEg6dt7y4GuDcY51RzLSkSNE8ZogD7U3Vs2/fIf4z89TOLpA80EOnhg==
 
 methods@~1.1.2:
   version "1.1.2"
@@ -18400,7 +18400,16 @@ string-env-interpolation@1.0.1, string-env-interpolation@^1.0.1:
   resolved "https://registry.yarnpkg.com/string-env-interpolation/-/string-env-interpolation-1.0.1.tgz#ad4397ae4ac53fe6c91d1402ad6f6a52862c7152"
   integrity sha512-78lwMoCcn0nNu8LszbP1UA7g55OeE4v7rCeWnM5B453rnNr4aq+5it3FEYtZrSEiMvHZOZ9Jlqb0OD0M2VInqg==
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -18482,7 +18491,14 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -19984,7 +20000,7 @@ wordwrap@^1.0.0:
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -19997,6 +20013,15 @@ wrap-ansi@^6.0.1, wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
+wrap-ansi@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
